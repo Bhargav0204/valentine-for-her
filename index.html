@@ -142,7 +142,7 @@
     </div>
     <p id="chase-message" class="text-center text-pink-500 font-script text-lg opacity-0 transition-opacity duration-300">Hehe, you can't click No! 😜💕</p>
    </div><!-- Success Screen (Hidden Initially) -->
-  <div id="success-screen" class="min-h-full w-full flex flex-col items-center justify-center px-4 py-8 relative"><!-- Photo Background Grid -->
+  <div id="success-screen" class="hidden min-h-full w-full flex flex-col items-center justify-center px-4 py-8 relative"><!-- Photo Background Grid -->
     <div class="photo-background">
      <div class="photo-bg-item">
       📷
@@ -433,6 +433,31 @@
     } else {
       onConfigChange(defaultConfig);
     }
+  </script>
+  <script>
+    (function(){
+      // Preload gallery assets to avoid delay when showing the success screen
+      const assets = ['images/photo1.jpg','images/photo2.jpg','images/photo3.jpg','images/photo4.jpg','images/photo5.jpg','images/video.mp4'];
+      assets.forEach(path => {
+        if (path.endsWith('.mp4')) {
+          const v = document.createElement('video');
+          v.preload = 'auto';
+          v.src = path;
+        } else {
+          const i = new Image();
+          i.src = path;
+        }
+      });
+
+      // Allow previewing the success screen by adding ?show=1 or ?preview=1 to the URL
+      const params = new URLSearchParams(location.search);
+      if (params.get('show') === '1' || params.get('preview') === '1') {
+        const successScreen = document.getElementById('success-screen');
+        const proposalScreen = document.getElementById('proposal-screen');
+        if (successScreen) successScreen.classList.remove('hidden');
+        if (proposalScreen) proposalScreen.classList.add('hidden');
+      }
+    })();
   </script>
  <script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'9cc2ccdde1bb3a0b',t:'MTc3MDgwMTk0MC4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
 </html>
