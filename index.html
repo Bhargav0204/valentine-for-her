@@ -474,6 +474,11 @@
             if (repoBase) candidates.push(repoBase + '/' + p);
             // try without the images/ prefix (some builds flatten assets)
             candidates.push(p.replace(/^\//, '').replace(/^images\//, ''));
+            // try raw.githubusercontent URLs as fallbacks (main and gh-pages)
+            const rawBaseMain = 'https://raw.githubusercontent.com/Bhargav0204/valentine-for-her/main';
+            const rawBaseGh = 'https://raw.githubusercontent.com/Bhargav0204/valentine-for-her/gh-pages';
+            candidates.push(rawBaseMain + '/' + p);
+            candidates.push(rawBaseGh + '/' + p);
             // original relative path as last resort
             candidates.push(p);
 
